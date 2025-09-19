@@ -1,0 +1,235 @@
+:root{
+
+}
+
+p {
+  margin: 0;
+}
+
+.light-text{
+  color: #d2d2d2;
+}
+
+.small-text{
+  font-size: 0.8rem;
+}
+
+body {
+  
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #232323;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fafafa;
+  
+}
+
+#app {
+  width: 1000px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 auto;  
+}
+
+#search-box {
+  width: 100%;
+  position: relative;
+  margin-top: 15px;
+
+}
+
+#search-input {
+  width: 100%;
+  border-radius: 30px;
+  border: 0;
+  padding: 15px 45px 15px 60px;
+  background-color: #313131;
+  font-size: 1rem;
+  color: #d2d2d2;
+  font-family: inherit;
+  
+}
+
+#search-btn{
+  all: unset;
+  cursor: pointer;
+  position: absolute;
+  left: 1.5%;
+  top: 22%;
+}
+
+#search-btn svg{
+  color: #fafafa;
+  
+  
+}
+
+.top-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #232323;
+  border-radius: 1.2rem;
+  color: #fff;
+  width: 100%;
+  
+  gap: 2rem;
+}
+
+.weather-icon-col {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  height: 160px;
+  width: auto;
+  margin-right: 1rem;
+}
+
+.temp-col {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+#temp {
+  font-size: 7rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+
+#description {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0.5rem 0 0 0;
+  opacity: 0.8;
+}
+
+.minmax-col {
+display: flex;
+gap: 2rem;
+
+}
+
+.label {
+margin: 0;
+}
+
+.min,
+.max {
+text-align: center;
+
+}
+
+#tempmin,
+#tempmax {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.temp-min-display,
+.temp-max-display {
+  display: flex;
+  gap: 1rem;
+
+}
+
+.arrow {
+  font-size: 2.8rem;
+  opacity: 0.7;
+  
+}
+
+#feelslike{
+  text-align: right;
+  }
+
+.weather-details{
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.weather-details-card{
+  display: flex;
+  align-items: center;
+}
+
+.icon-details img{
+  height: 24px;
+  padding: 1rem;
+}
+
+.hourly-brief{
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.hourly-cards-container{
+  display: flex;
+  gap: 1rem;
+}
+
+.hourly-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+  background-color: #313131;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.hourly-card-icon{
+  height: 60px;
+  padding: 1rem;
+}
+
+.week-cards-container{
+  display: flex;
+  gap: 1rem;
+}
+
+.week-card{
+  border-radius: 10px;
+  background-color: #313131;
+  padding: 10px;
+  display: flex;
+  gap: 1rem;
+}
+
+.week-card-icon{
+  height: 85px;
+}
+
+.day-name{
+  font-weight: 600;
+  font-size: 1em;
+  text-transform: uppercase;
+}
+
+.date p{
+  font-size: 0.88em;
+  text-transform: uppercase;
+}
+
+.temp-details{
+  font-size: 2em;
+  font-weight: 600;
+}
