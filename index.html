@@ -19,6 +19,7 @@
           type="search"
           id="search-input"
           placeholder="Search for a city..."
+          autocomplete="off"
         />
         <button id="search-btn" type="submit">
           <svg
@@ -40,7 +41,10 @@
           <img src="/icons/clear-day.png" class="icon" id="weather-icon" />
         </div>
         <div class="temp-col">
+          <div class="cityAndDate">
           <h2 id="city" class="light-text"></h2>
+          <h4 id="display-date" class="light-text"></h4>
+          </div>
           <h1 id="temp">26.2°</h1>
           <h2 id="description" class="light-text">Partly cloudy</h2>
         </div>
@@ -98,25 +102,7 @@
           </div>
         </div>
 
-        <div class="weather-details-card">
-          <div class="icon-details">
-            <img src="/iconsSmall/sunrise.png" />
-          </div>
-          <div class="card-details">
-            <p class="small-text light-text">Sunrise</p>
-            <p id="sunrise" class="card-text">94%</p>
-          </div>
-        </div>
-
-        <div class="weather-details-card">
-          <div class="icon-details">
-            <img src="/iconsSmall/sunset.png" />
-          </div>
-          <div class="card-details">
-            <p class="small-text light-text">Sunset</p>
-            <p id="sunset" class="card-text">94%</p>
-          </div>
-        </div>
+        
 
         <div class="weather-details-card">
           <div class="icon-details">
@@ -145,6 +131,26 @@
           <div class="card-details">
             <p class="small-text light-text">Gusts</p>
             <p id="gusts" class="card-text">94%</p>
+          </div>
+        </div>
+
+        <div class="weather-details-card">
+          <div class="icon-details">
+            <img src="/iconsSmall/sunrise.png" />
+          </div>
+          <div class="card-details">
+            <p class="small-text light-text">Sunrise</p>
+            <p id="sunrise" class="card-text">94%</p>
+          </div>
+        </div>
+
+        <div class="weather-details-card">
+          <div class="icon-details">
+            <img src="/iconsSmall/sunset.png" />
+          </div>
+          <div class="card-details">
+            <p class="small-text light-text">Sunset</p>
+            <p id="sunset" class="card-text">94%</p>
           </div>
         </div>
       </section>

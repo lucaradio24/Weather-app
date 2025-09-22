@@ -52,6 +52,8 @@ body {
   font-family: inherit;
 }
 
+
+
 #search-btn {
   all: unset;
   cursor: pointer;
@@ -64,6 +66,28 @@ body {
   color: #fafafa;
 }
 
+#search-suggestions{
+  position: absolute;
+  top: 4rem;
+  background-color: #313131;
+  width: 100%;
+  padding: 1rem 0 1rem 0rem;
+  z-index: 100;
+  max-height: 250px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.411);
+}
+
+.suggestion{
+  padding-left: 0.8rem;
+  cursor: pointer;
+  margin: 0.5rem 0;
+  background-color: #232323;
+  font-size: 1rem;
+}
+
+
 .top-container {
   display: flex;
   align-items: center;
@@ -74,6 +98,11 @@ body {
   width: 100%;
 
   gap: 2rem;
+}
+
+#display-date,
+#city {
+  margin: 0.5rem 0 0.5rem 0;
 }
 
 .weather-icon-col {
@@ -220,8 +249,9 @@ body {
 }
 
 .temp-details {
-  font-size: 2em;
+  font-size: 1.5rem;
   font-weight: 600;
+  
 }
 
 .week-brief {
@@ -237,4 +267,14 @@ body {
 .swiper-button-next.swiper-button-disabled,
 .swiper-button-prev.swiper-button-disabled {
   display: none;
+}
+
+.week-card{
+  cursor: pointer;
+}
+
+.swiper-slide.active {
+  border: 2px solid #fff; /* Esempio: bordo bianco */
+  background: rgba(255, 255, 255, 0.1); /* Sfondo semi-trasparente */
+  transform: scale(1.05); /* Leggera ingrandimento */
 }

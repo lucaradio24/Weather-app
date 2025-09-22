@@ -38,4 +38,9 @@ export class WeatherDay {
     const date = new Date(this.date);
     return date.toLocaleDateString('it-IT', { day: "numeric", month: "short"})
   }
+
+  formatDateLong(){
+    const date = new Date(this.date);
+    return date.toLocaleDateString('en-EN', { weekday: "long", day: "numeric", month: "long"})
+  }
 }

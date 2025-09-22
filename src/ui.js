@@ -5,6 +5,7 @@ import Swiper from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
+import { getCitySuggestions } from "./weatherAPI.js";
 
 // Search
 const searchBox = document.querySelector("#search-box");
@@ -19,6 +20,7 @@ const description = document.querySelector("#description");
 const tempMin = document.querySelector("#tempmin");
 const tempMax = document.querySelector("#tempmax");
 const feelsLike = document.querySelector("#feelslike");
+const displayDate = document.querySelector('#display-date')
 
 // Weather details cards
 const chanceOfRain = document.querySelector("#chance-of-rain");
@@ -32,6 +34,7 @@ const gusts = document.querySelector("#gusts");
 
 // Week cards
 const weekCards = document.querySelectorAll(".week-card");
+
 
 export function searchFunction() {
   searchBox.addEventListener("submit", async (e) => {
@@ -53,10 +56,11 @@ if (query.length < 2) return;
 
 
 export function renderData(weatherData, index) {
-  displayCity.textContent = weatherData.city;
-  temp.textContent = weatherData.days[index].temp;
-  tempMin.textContent = weatherData.days[index].tempMin;
-  tempMax.textContent = weatherData.days[index].tempMax;
+  searchInput.value = weatherData.city;
+  displayDate.textContent = weatherData.days[index].formatDateLong()
+  temp.textContent = weatherData.days[index].temp + '°';
+  tempMin.textContent = weatherData.days[index].tempMin + '°';
+  tempMax.textContent = weatherData.days[index].tempMax + '°';
   feelsLike.textContent = `Feels like ${weatherData.days[index].feelsLike}°`;
   chanceOfRain.textContent = weatherData.days[index].chanceOfRain + "%";
   humidity.textContent = weatherData.days[index].humidity + "%";
@@ -71,17 +75,22 @@ export function renderData(weatherData, index) {
   const currentHour = new Date().getHours();
 
   const filteredHours = weatherData.days[index].getFilteredHours(currentHour);
+  
+
+  
+
   renderHourlyCarousel(filteredHours);
+  renderWeekCarousel(weatherData);
 
   const swiper = new Swiper(".swiper", {
     modules: [Navigation],
-    slidesPerView: 8, // Quante card visibili
+    slidesPerView: 6, // Quante card visibili
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
     },
     spaceBetween: 10,
-    // Altre opzioni Swiper...
+    
   });
 
     const weekSwiper = new Swiper('.week-swiper', {
@@ -93,9 +102,6 @@ export function renderData(weatherData, index) {
     },
     spaceBetween: 10,
   });
-
-renderWeekCarousel(weatherData)
-
 };
 
 
@@ -182,8 +188,69 @@ function renderWeekCarousel(weatherData) {
           </div>
         </div>
       `;
+
+      slide.addEventListener('click', () => {
+        renderData(weatherData, i)
+      })
+
       wrapper.appendChild(slide);
     }
   }
 }
+
+
+function debounce(fn, wait = 300) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
+
+function createSuggestionContainer() {
+  let c = document.getElementById('search-suggestions');
+  if (!c) {
+    c = document.createElement('div');
+    c.id = 'search-suggestions';
+    c.className = 'suggestions';
+    searchBox.appendChild(c);
+  }
+  return c;
+}
+
+function renderSuggestions(items) {
+  const container = createSuggestionContainer();
+  container.style.display = '';
+  container.innerHTML = items.map(it =>
+    `<div class="suggestion" data-name="${it.name}" data-lat="${it.lat}" data-lon="${it.lon}">
+      <h3 class='city-name'>${it.name}</h3>
+      <p class='region light-text'>${it.region ? it.region + ', ' : ''}${it.country ? it.country : ''}
+    </p>
+      </div>`
+  ).join('');
+  container.querySelectorAll('.suggestion').forEach(el =>
+    el.addEventListener('click', async () => {
+      const name = el.dataset.name;
+    
+      const apiData = await getApiData(name);
+      const weatherData = new WeatherData(apiData);
+      renderData(weatherData, 0);
+      container.innerHTML = '';
+      container.style.display = 'none'
+    })
+  );
+
+  if (searchInput.value == '') container.style.display = 'none'
+
+  document.addEventListener('click', (e) => {
+    if(!container.contains(e.target)) container.style.display = 'none'
+  })
+}
+
+const debouncedSuggest = debounce(async (q) => {
+  const items = await getCitySuggestions(q);
+  renderSuggestions(items);
+}, 300);
+
+searchInput.addEventListener('input', (e) => debouncedSuggest(e.target.value.trim()));
 
