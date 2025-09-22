@@ -26,8 +26,7 @@ const uvIndex = document.querySelector("#uv-index");
 const pressure = document.querySelector("#pressure");
 const gusts = document.querySelector("#gusts");
 
-// Hourly cards
-const hourlyCards = document.querySelectorAll(".hourly-card");
+
 
 // Week cards
 const weekCards = document.querySelectorAll(".week-card");
@@ -57,6 +56,29 @@ export function renderData(weatherData, index){
     uvIndex.textContent = weatherData.days[index].uvIndex;
     pressure.textContent = weatherData.days[index].pressure + 'mB';
     gusts.textContent = weatherData.days[index].gusts + 'km/h';
-    weatherIcon.src = `/icons/${weatherData.days[index].icon}.svg`
+    weatherIcon.src = `/icons/${weatherData.days[index].icon}.svg`;
 
+    const currentHour = new Date().getHours();
+    
+    const filteredHours = weatherData.days[index].getFilteredHours(currentHour);
+    renderHourlyData(filteredHours)
+
+}
+
+// Hourly cards
+const hourlyCards = document.querySelectorAll(".hourly-card");
+const hourText = document.querySelectorAll('.hour-text');
+const hourIcon = document.querySelectorAll('.hourly-card-icon');
+const hourTemp = document.querySelectorAll('.hourly-card-temp');
+
+function renderHourlyData(hours){
+hourText.forEach((el, i) => {
+  el.textContent = hours[i]?.formatHour();
+});
+hourIcon.forEach((el, i) => {
+  el.src = `/icons/${hours[i]?.icon}.svg`;
+});
+hourTemp.forEach((el, i) => {
+  el.textContent = hours[i]?.temp;
+});
 }

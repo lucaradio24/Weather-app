@@ -1,3 +1,4 @@
+import { WeatherHour } from "./weatherHour";
 
 export class WeatherDay {
   constructor(dayData, dayIndex) {
@@ -17,5 +18,14 @@ export class WeatherDay {
     this.sunset = dayData.sunset;
     this.uvIndex = dayData.uvindex;
     this.pressure = dayData.pressure;
+    
+    this.hours = dayData.hours.map((hourlyData, hourIndex) => 
+    new WeatherHour(hourlyData, hourIndex))
+  }
+
+  getFilteredHours(currentHour){
+    const startIndex = this.hours.findIndex(h => parseInt(h.hour.slice(0,2)) === currentHour);
+    const filteredHours = this.hours.slice(startIndex + 1)
+    return filteredHours;
   }
 }

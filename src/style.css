@@ -233,3 +233,8 @@ text-align: center;
   font-size: 2em;
   font-weight: 600;
 }
+
+.week-brief{
+  width: 100%;
+  overflow: hidden;
+}
