@@ -3,7 +3,7 @@ import { WeatherHour } from "./weatherHour";
 export class WeatherDay {
   constructor(dayData, dayIndex) {
     this.dayIndex = dayIndex;
-    this.date = dayData.date;
+    this.date = dayData.datetime;
     this.temp = dayData.temp;
     this.tempMin = dayData.tempmin;
     this.tempMax = dayData.tempmax;
@@ -27,5 +27,15 @@ export class WeatherDay {
     const startIndex = this.hours.findIndex(h => parseInt(h.hour.slice(0,2)) === currentHour);
     const filteredHours = this.hours.slice(startIndex + 1)
     return filteredHours;
+  }
+
+  getDayName(){
+  const date = new Date(this.date);
+  return date.toLocaleDateString('it-IT', {weekday: "short"}).toUpperCase()
+}
+
+  formatDate(){
+    const date = new Date(this.date);
+    return date.toLocaleDateString('it-IT', { day: "numeric", month: "short"})
   }
 }

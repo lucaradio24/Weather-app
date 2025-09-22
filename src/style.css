@@ -1,21 +1,20 @@
-:root{
-
+:root {
+  --swiper-navigation-color: #fafafa;
 }
 
 p {
   margin: 0;
 }
 
-.light-text{
+.light-text {
   color: #d2d2d2;
 }
 
-.small-text{
+.small-text {
   font-size: 0.8rem;
 }
 
 body {
-  
   padding: 0;
   box-sizing: border-box;
   background-color: #232323;
@@ -23,7 +22,6 @@ body {
   font-size: 18px;
   font-weight: 400;
   color: #fafafa;
-  
 }
 
 #app {
@@ -34,14 +32,13 @@ body {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin: 0 auto;  
+  margin: 0 auto;
 }
 
 #search-box {
   width: 100%;
   position: relative;
   margin-top: 15px;
-
 }
 
 #search-input {
@@ -53,10 +50,9 @@ body {
   font-size: 1rem;
   color: #d2d2d2;
   font-family: inherit;
-  
 }
 
-#search-btn{
+#search-btn {
   all: unset;
   cursor: pointer;
   position: absolute;
@@ -64,10 +60,8 @@ body {
   top: 22%;
 }
 
-#search-btn svg{
+#search-btn svg {
   color: #fafafa;
-  
-  
 }
 
 .top-container {
@@ -78,7 +72,7 @@ body {
   border-radius: 1.2rem;
   color: #fff;
   width: 100%;
-  
+
   gap: 2rem;
 }
 
@@ -118,19 +112,17 @@ body {
 }
 
 .minmax-col {
-display: flex;
-gap: 2rem;
-
+  display: flex;
+  gap: 2rem;
 }
 
 .label {
-margin: 0;
+  margin: 0;
 }
 
 .min,
 .max {
-text-align: center;
-
+  text-align: center;
 }
 
 #tempmin,
@@ -144,20 +136,18 @@ text-align: center;
 .temp-max-display {
   display: flex;
   gap: 1rem;
-
 }
 
 .arrow {
   font-size: 2.8rem;
   opacity: 0.7;
-  
 }
 
-#feelslike{
+#feelslike {
   text-align: right;
-  }
+}
 
-.weather-details{
+.weather-details {
   min-width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -166,27 +156,27 @@ text-align: center;
   margin-top: 1rem;
 }
 
-.weather-details-card{
+.weather-details-card {
   display: flex;
   align-items: center;
 }
 
-.icon-details img{
+.icon-details img {
   height: 24px;
   padding: 1rem;
 }
 
-.hourly-brief{
+.hourly-brief {
   max-width: 100%;
   overflow: hidden;
 }
 
-.hourly-cards-container{
+.hourly-cards-container {
   display: flex;
   gap: 1rem;
 }
 
-.hourly-card{
+.hourly-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -196,17 +186,17 @@ text-align: center;
   padding: 10px;
 }
 
-.hourly-card-icon{
+.hourly-card-icon {
   height: 60px;
   padding: 1rem;
 }
 
-.week-cards-container{
+.week-cards-container {
   display: flex;
   gap: 1rem;
 }
 
-.week-card{
+.week-card {
   border-radius: 10px;
   background-color: #313131;
   padding: 10px;
@@ -214,27 +204,37 @@ text-align: center;
   gap: 1rem;
 }
 
-.week-card-icon{
+.week-card-icon {
   height: 85px;
 }
 
-.day-name{
+.day-name {
   font-weight: 600;
   font-size: 1em;
   text-transform: uppercase;
 }
 
-.date p{
+.date p {
   font-size: 0.88em;
   text-transform: uppercase;
 }
 
-.temp-details{
+.temp-details {
   font-size: 2em;
   font-weight: 600;
 }
 
-.week-brief{
+.week-brief {
   width: 100%;
   overflow: hidden;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  width: 1rem !important;
+}
+
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  display: none;
 }

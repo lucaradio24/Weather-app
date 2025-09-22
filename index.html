@@ -151,7 +151,13 @@
 
       <section class="hourly-brief">
         <h3 class="brief-title">Hourly</h3>
-        <div class="hourly-cards-container">
+        <div class="swiper">
+          <div class="swiper-wrapper" id="hourly-swiper-wrapper">
+
+          </div>
+           <div class="swiper-button-next"></div>
+           <div class="swiper-button-prev"></div>
+        <!-- <div class="hourly-cards-container">
           <div class="hourly-card">
             <span class="hour-text small-text">4 PM</span>
             <img class="hourly-card-icon" src="/icons/clear-day.png" />
@@ -191,67 +197,23 @@
             <span class="hour-text small-text">4 PM</span>
             <img class="hourly-card-icon" src="/icons/clear-day.png" />
             <p class="hourly-card-temp small-text">18°C</p>
-          </div>
+          </div> -->
         </div>
+        
       </section>
 
       <section class="week-brief">
         <h3 class="brief-title">This week</h3>
         <div class="week-cards-container">
-          <div class="week-card">
-            <img class="week-card-icon" src="/icons/clear-day.png" />
-            <div class="week-details-container">
-              <div class="date">
-                <p class="day-name">Mon</p>
-                <p class="date">19 Sep</p>
-              </div>
-              <div class="temp-details">23°C</div>
-            </div>
-          </div>
-          <div class="week-card">
-            <img class="week-card-icon" src="/icons/clear-day.png" />
-            <div class="week-details-container">
-              <div class="date">
-                <p class="day-name">Mon</p>
-                <p class="date">19 Sep</p>
-              </div>
-              <div class="temp-details">23°C</div>
-            </div>
-          </div>
-          <div class="week-card">
-            <img class="week-card-icon" src="/icons/clear-day.png" />
-            <div class="week-details-container">
-              <div class="date">
-                <p class="day-name">Mon</p>
-                <p class="date">19 Sep</p>
-              </div>
-              <div class="temp-details">23°C</div>
-            </div>
-          </div>
-          <div class="week-card">
-            <img class="week-card-icon" src="/icons/clear-day.png" />
-            <div class="week-details-container">
-              <div class="date">
-                <p class="day-name">Mon</p>
-                <p class="date">19 Sep</p>
-              </div>
-              <div class="temp-details">23°C</div>
-            </div>
-          </div>
-          <div class="week-card">
-            <img class="week-card-icon" src="/icons/clear-day.png" />
-            <div class="week-details-container">
-              <div class="date">
-                <p class="day-name">Mon</p>
-                <p class="date">19 Sep</p>
-              </div>
-              <div class="temp-details">23°C</div>
-            </div>
-          </div>
+          <div class="swiper week-swiper">
+          <div class="swiper-wrapper" id="week-swiper-wrapper"></div>
+          <div class="swiper-button-next week-next"></div>
+          <div class="swiper-button-prev week-prev"></div>
+        </div>
         </div>
       </section>
     </div>
-
+  </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

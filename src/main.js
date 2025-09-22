@@ -1,22 +1,19 @@
-import './style.css'
-import { searchFunction, renderData } from './ui.js'
-import { getApiData } from './ApiData.js';
-import { WeatherData } from './weatherData.js';
+import "./style.css";
+import { searchFunction, renderData } from "./ui.js";
+import { getApiData } from "./ApiData.js";
+import { WeatherData } from "./weatherData.js";
+import "swiper/css";
 
-searchFunction()
+searchFunction();
 
-  const apiData = await getApiData('Naples');
-  const weatherData = new WeatherData(apiData);
-  renderData(weatherData, 0)
-
+const apiData = await getApiData("Naples");
+const weatherData = new WeatherData(apiData);
+renderData(weatherData, 0);
 
 // const tempData = document.querySelector('.tempData')
 // const search = document.querySelector('input[type="search"]')
 // const searchSubmit = document.querySelector('button[type="submit"]')
 // const searchBox = document.querySelector('#search-box')
-
-
-
 
 // // Search function
 
@@ -25,8 +22,7 @@ searchFunction()
 //   getData(search.value)
 // })
 
-
-// // render data 
+// // render data
 
 // const location = document.querySelector('#location');
 // const date = document.querySelector('#date');
@@ -53,5 +49,5 @@ searchFunction()
 //   let conditions = console.log(weatherData.days[0].conditions)
 //   let humidity = console.log(weatherData.days[0].humidity);
 //   let chanceOfRain = console.log(weatherData.days[0].precipprob);
-  
+
 // }
