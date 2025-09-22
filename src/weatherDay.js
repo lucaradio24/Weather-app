@@ -23,9 +23,17 @@ export class WeatherDay {
     new WeatherHour(hourlyData, hourIndex))
   }
 
-  getFilteredHours(currentHour){
+  getFilteredHours(currentHour, minHours = 12){
+
     const startIndex = this.hours.findIndex(h => parseInt(h.hour.slice(0,2)) === currentHour);
-    const filteredHours = this.hours.slice(startIndex + 1)
+    let filteredHours = this.hours.slice(startIndex + 1)
+    
+    if(filteredHours.length < minHours){
+      const hoursNeeded = minHours - filteredHours.length;
+      const previousHours = this.hours.slice(Math.max(0, startIndex - hoursNeeded), startIndex);
+      filteredHours = [...previousHours, ...filteredHours];
+
+    }
     return filteredHours;
   }
 

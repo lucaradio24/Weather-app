@@ -74,7 +74,7 @@ export function renderData(weatherData, index) {
 
   const currentHour = new Date().getHours();
 
-  const filteredHours = weatherData.days[index].getFilteredHours(currentHour);
+  const filteredHours = weatherData.days[index].getFilteredHours(currentHour, 12);
   
 
   
@@ -82,12 +82,12 @@ export function renderData(weatherData, index) {
   renderHourlyCarousel(filteredHours);
   renderWeekCarousel(weatherData);
 
-  const swiper = new Swiper(".swiper", {
+  const hourlySwiper = new Swiper(".hourly-swiper", {
     modules: [Navigation],
     slidesPerView: 6, // Quante card visibili
     navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
+      nextEl: ".hourly-next",
+      prevEl: ".hourly-prev",
     },
     spaceBetween: 10,
     
@@ -102,6 +102,8 @@ export function renderData(weatherData, index) {
     },
     spaceBetween: 10,
   });
+
+  console.log("Ore filtrate:", filteredHours.length);
 };
 
 
@@ -111,17 +113,7 @@ const hourText = document.querySelectorAll(".hour-text");
 const hourIcon = document.querySelectorAll(".hourly-card-icon");
 const hourTemp = document.querySelectorAll(".hourly-card-temp");
 
-// function renderHourlyData(hours){
-// hourText.forEach((el, i) => {
-//   el.textContent = hours[i]?.formatHour();
-// });
-// hourIcon.forEach((el, i) => {
-//   el.src = `/icons/${hours[i]?.icon}.svg`;
-// });
-// hourTemp.forEach((el, i) => {
-//   el.textContent = hours[i]?.temp;
-// });
-// }
+
 
 function renderHourlyCarousel(hours) {
   const wrapper = document.getElementById("hourly-swiper-wrapper");
@@ -253,4 +245,3 @@ const debouncedSuggest = debounce(async (q) => {
 }, 300);
 
 searchInput.addEventListener('input', (e) => debouncedSuggest(e.target.value.trim()));
-
