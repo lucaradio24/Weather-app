@@ -1,14 +1,31 @@
 import "./style.css";
-import { searchFunction, renderData } from "./ui.js";
+import { searchFunction, renderData, initializeApp, getUserLocation } from "./ui.js";
 import { getApiData } from "./ApiData.js";
 import { WeatherData } from "./weatherData.js";
 import "swiper/css";
+import { getCityNameFromCoords } from "./weatherAPI.js";
 
-searchFunction();
 
-const apiData = await getApiData("Naples");
-const weatherData = new WeatherData(apiData);
-renderData(weatherData, 0);
+
+
+addEventListener('DOMContentLoaded', () => {
+    searchFunction();
+    initializeApp();
+
+    
+})
+
+console.time('Geolocalizzazione');
+const position = await getUserLocation();
+console.timeEnd('Geolocalizzazione');
+
+console.time('Nome città');
+const cityName = await getCityNameFromCoords(position.lat, position.lon);
+console.timeEnd('Nome città');
+
+console.time('Dati meteo');
+const apiData = await getApiData(position);
+console.timeEnd('Dati meteo');
 
 // const tempData = document.querySelector('.tempData')
 // const search = document.querySelector('input[type="search"]')

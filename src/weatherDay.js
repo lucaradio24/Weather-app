@@ -39,12 +39,12 @@ export class WeatherDay {
 
   getDayName(){
   const date = new Date(this.date);
-  return date.toLocaleDateString('it-IT', {weekday: "short"}).toUpperCase()
+  return date.toLocaleDateString('en-EN', {weekday: "short"}).toUpperCase()
 }
 
   formatDate(){
     const date = new Date(this.date);
-    return date.toLocaleDateString('it-IT', { day: "numeric", month: "short"})
+    return date.toLocaleDateString('en-EN', { day: "numeric", month: "short"})
   }
 
   formatDateLong(){

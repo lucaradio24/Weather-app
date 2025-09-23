@@ -9,10 +9,11 @@
       href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap"
       rel="stylesheet"
     />
+      <link rel="stylesheet" href="/src/style.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather app</title>
   </head>
-  <body>
+  <div>
     <div id="app">
       <form id="search-box">
         <input
@@ -36,14 +37,20 @@
         </button>
       </form>
 
+      <div id="loading">
+        <div class="spinner"></div>
+        <p>Loading weather data...</p>
+        </div>
+
+      <div id="main-content">
       <div class="top-container">
         <div class="weather-icon-col">
           <img src="/icons/clear-day.png" class="icon" id="weather-icon" />
         </div>
         <div class="temp-col">
           <div class="cityAndDate">
-          <h2 id="city" class="light-text"></h2>
-          <h4 id="display-date" class="light-text"></h4>
+            <h2 id="city" class="light-text"></h2>
+            <h4 id="display-date" class="light-text"></h4>
           </div>
           <h1 id="temp">26.2°</h1>
           <h2 id="description" class="light-text">Partly cloudy</h2>
@@ -102,8 +109,6 @@
           </div>
         </div>
 
-        
-
         <div class="weather-details-card">
           <div class="icon-details">
             <img src="/iconsSmall/uvIndex.png" />
@@ -158,68 +163,25 @@
       <section class="hourly-brief">
         <h3 class="brief-title">Hourly</h3>
         <div class="swiper hourly-swiper">
-          <div class="swiper-wrapper" id="hourly-swiper-wrapper">
-
-          </div>
-           <div class="swiper-button-next hourly-next"></div>
-           <div class="swiper-button-prev hourly-prev"></div>
-        <!-- <div class="hourly-cards-container">
-          <div class="hourly-card">
-            <span class="hour-text small-text">4 PM</span>
-            <img class="hourly-card-icon" src="/icons/clear-day.png" />
-            <p class="hourly-card-temp small-text">18°C</p>
-          </div>
-          <div class="hourly-card">
-            <span class="hour-text small-text">4 PM</span>
-            <img class="hourly-card-icon" src="/icons/clear-day.png" />
-            <p class="hourly-card-temp small-text">18°C</p>
-          </div>
-          <div class="hourly-card">
-            <span class="hour-text small-text">4 PM</span>
-            <img class="hourly-card-icon" src="/icons/clear-day.png" />
-            <p class="hourly-card-temp small-text">18°C</p>
-          </div>
-          <div class="hourly-card">
-            <span class="hour-text small-text">4 PM</span>
-            <img class="hourly-card-icon" src="/icons/clear-day.png" />
-            <p class="hourly-card-temp small-text">18°C</p>
-          </div>
-          <div class="hourly-card">
-            <span class="hour-text small-text">4 PM</span>
-            <img class="hourly-card-icon" src="/icons/clear-day.png" />
-            <p class="hourly-card-temp small-text">18°C</p>
-          </div>
-          <div class="hourly-card">
-            <span class="hour-text small-text">4 PM</span>
-            <img class="hourly-card-icon" src="/icons/clear-day.png" />
-            <p class="hourly-card-temp small-text">18°C</p>
-          </div>
-          <div class="hourly-card">
-            <span class="hour-text small-text">4 PM</span>
-            <img class="hourly-card-icon" src="/icons/clear-day.png" />
-            <p class="hourly-card-temp small-text">18°C</p>
-          </div>
-          <div class="hourly-card">
-            <span class="hour-text small-text">4 PM</span>
-            <img class="hourly-card-icon" src="/icons/clear-day.png" />
-            <p class="hourly-card-temp small-text">18°C</p>
-          </div> -->
+          <div class="swiper-wrapper" id="hourly-swiper-wrapper"></div>
+          <div class="swiper-button-next hourly-next"></div>
+          <div class="swiper-button-prev hourly-prev"></div>
         </div>
-        
       </section>
 
       <section class="week-brief">
         <h3 class="brief-title">This week</h3>
         <div class="week-cards-container">
           <div class="swiper week-swiper">
-          <div class="swiper-wrapper" id="week-swiper-wrapper"></div>
-          <div class="swiper-button-next week-next"></div>
-          <div class="swiper-button-prev week-prev"></div>
-        </div>
+            <div class="swiper-wrapper" id="week-swiper-wrapper"></div>
+            <div class="swiper-button-next week-next"></div>
+            <div class="swiper-button-prev week-prev"></div>
+          </div>
         </div>
       </section>
     </div>
   </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

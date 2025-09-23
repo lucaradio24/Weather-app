@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { getCitySuggestions } from "./weatherAPI.js";
+import { getCityNameFromCoords } from "./weatherAPI.js";
 
 // Search
 const searchBox = document.querySelector("#search-box");
@@ -53,10 +54,53 @@ if (query.length < 2) return;
 })
 
 
+export async function getUserLocation(){
+  if (!navigator.geolocation){
+     throw new Error('Geolocalizzazione non supportata dal browser')
+  }
 
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        resolve({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude
+        });
+      },
+      (error) => {
+        reject(error);
+      },
+      {enableHighAccuracy: true,
+        timeout: 7000,
+        maximumAge: 300000
+      }
+    )
+  })
+}
+
+export async function initializeApp() {
+  showLoading()
+  searchInput.value = 'Finding your location...'
+  try {
+    const position = await getUserLocation();
+    const cityName = await getCityNameFromCoords(position.lat, position.lon);
+    const apiData = await getApiData(position)
+    const weatherData = new WeatherData(apiData)
+    searchInput.value = cityName || weatherData.city;
+    renderData(weatherData, 0)
+    hideLoading()
+  } catch (error) {
+    console.warn('Geolocalizzazione fallita', error.message)
+    const apiData = await getApiData('Rome');
+    const weatherData = new WeatherData(apiData)
+    searchInput.value = weatherData.city;
+    renderData(weatherData, 0)
+    hideLoading()
+    
+  }
+}
 
 export function renderData(weatherData, index) {
-  searchInput.value = weatherData.city;
   displayDate.textContent = weatherData.days[index].formatDateLong()
   temp.textContent = weatherData.days[index].temp + '°';
   tempMin.textContent = weatherData.days[index].tempMin + '°';
@@ -103,7 +147,6 @@ export function renderData(weatherData, index) {
     spaceBetween: 10,
   });
 
-  console.log("Ore filtrate:", filteredHours.length);
 };
 
 
@@ -181,8 +224,9 @@ function renderWeekCarousel(weatherData) {
         </div>
       `;
 
-      slide.addEventListener('click', () => {
+      slide.addEventListener('click', (e) => {
         renderData(weatherData, i)
+        
       })
 
       wrapper.appendChild(slide);
@@ -222,9 +266,16 @@ function renderSuggestions(items) {
   ).join('');
   container.querySelectorAll('.suggestion').forEach(el =>
     el.addEventListener('click', async () => {
-      const name = el.dataset.name;
+      const lat = parseFloat(el.dataset.lat);
+      const lon = parseFloat(el.dataset.lon);
+
+      const cityName = el.querySelector('.city-name').textContent;
+      const regionName = el.querySelector('.region').textContent;
+      const truncatedRegion = regionName.split(',')[0];
+     
+      searchInput.value = `${cityName}, ${truncatedRegion}`
     
-      const apiData = await getApiData(name);
+      const apiData = await getApiData({lat, lon});
       const weatherData = new WeatherData(apiData);
       renderData(weatherData, 0);
       container.innerHTML = '';
@@ -245,3 +296,17 @@ const debouncedSuggest = debounce(async (q) => {
 }, 300);
 
 searchInput.addEventListener('input', (e) => debouncedSuggest(e.target.value.trim()));
+
+
+const loading = document.getElementById('loading');
+const mainContent = document.getElementById('main-content');
+
+function showLoading(){
+  loading.style.display = 'block';
+  mainContent.style.display = 'none';
+}
+
+function hideLoading(){
+  loading.style.display = 'none'
+  mainContent.style.display = 'block'
+}
