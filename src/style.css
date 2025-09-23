@@ -69,9 +69,10 @@ body {
   border: 0;
   padding: 15px 45px 15px 60px;
   background-color: var(--card-bg);
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--muted-text);
   font-family: inherit;
+  font-weight: 500;
 }
 
 #search-input:focus{
@@ -102,7 +103,12 @@ body {
   overflow-y: auto;
   border-radius: 10px;
   padding-top: .5rem;
+  
+
 }
+
+
+
 
 .suggestion{
   padding-left: 0.8rem;
@@ -148,6 +154,8 @@ body {
   width: auto;
   margin-right: 1rem;
 }
+
+
 
 .temp-col {
   flex: 1 1 auto;
@@ -197,6 +205,8 @@ body {
   display: flex;
   gap: 1rem;
 }
+
+
 
 .arrow {
   font-size: 2.8rem;
@@ -251,6 +261,10 @@ body {
   padding: 1rem;
 }
 
+.hourly-card-icon {
+ filter: invert(0);
+}
+
 .week-cards-container {
   display: flex;
   gap: 1rem;
@@ -293,6 +307,27 @@ body {
 .week-brief {
   width: 100%;
   overflow: hidden;
+}
+
+#today{
+  border-radius: 5px;
+  border: 0;
+  padding: .1rem .5rem;
+  max-height: 30px;
+  background-color: transparent;
+  color: var(--muted-text);
+  font: inherit;
+  font-size: .8rem;
+  cursor: pointer;
+  display: none;
+}
+
+#today:hover{
+  color: var(--hover-color);
+}
+
+.active{
+  background-color: var(--hover-color);
 }
 
 .swiper-button-next,
@@ -345,4 +380,15 @@ body {
 
 #main-content {
   display: none; /* Nasconde il contenuto per default */
+}
+
+#loading,
+#main-content{
+  transition: opacity 0.5s ease-in-out;
+}
+
+.hourly-card-icon,
+.icon,
+.week-card-icon{
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.562));
 }
