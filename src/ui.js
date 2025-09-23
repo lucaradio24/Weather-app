@@ -23,6 +23,9 @@ const tempMax = document.querySelector("#tempmax");
 const feelsLike = document.querySelector("#feelslike");
 const displayDate = document.querySelector('#display-date')
 
+let isDarkMode = true;
+const toggleColorsModeBtn = document.querySelector('#toggle-colors-mode');
+
 // Weather details cards
 const chanceOfRain = document.querySelector("#chance-of-rain");
 const humidity = document.querySelector("#humidity");
@@ -88,14 +91,15 @@ export async function initializeApp() {
     const weatherData = new WeatherData(apiData)
     searchInput.value = cityName || weatherData.city;
     renderData(weatherData, 0)
-    hideLoading()
+    setTimeout(() => hideLoading(), 1000)
   } catch (error) {
     console.warn('Geolocalizzazione fallita', error.message)
+    searchInput.value = "We couldn't find your location right now. Showing weather for Rome."
     const apiData = await getApiData('Rome');
     const weatherData = new WeatherData(apiData)
     searchInput.value = weatherData.city;
     renderData(weatherData, 0)
-    hideLoading()
+    setTimeout(() => hideLoading(), 2000)
     
   }
 }
@@ -108,13 +112,15 @@ export function renderData(weatherData, index) {
   feelsLike.textContent = `Feels like ${weatherData.days[index].feelsLike}°`;
   chanceOfRain.textContent = weatherData.days[index].chanceOfRain + "%";
   humidity.textContent = weatherData.days[index].humidity + "%";
-  wind.textContent = weatherData.days[index].wind + "km/h";
-  sunrise.textContent = weatherData.days[index].sunrise;
-  sunset.textContent = weatherData.days[index].sunset;
+  wind.textContent = weatherData.days[index].wind + " km/h";
+  sunrise.textContent = weatherData.days[index].sunrise.slice(0, -3);
+  sunset.textContent = weatherData.days[index].sunset.slice(0, -3);
   uvIndex.textContent = weatherData.days[index].uvIndex;
-  pressure.textContent = weatherData.days[index].pressure + "mB";
-  gusts.textContent = weatherData.days[index].gusts + "km/h";
+  pressure.textContent = weatherData.days[index].pressure + " mB";
+  gusts.textContent = weatherData.days[index].gusts + " km/h";
   weatherIcon.src = `/icons/${weatherData.days[index].icon}.svg`;
+  
+  description.textContent = weatherData.days[index].description.split(',')[0];
 
   const currentHour = new Date().getHours();
 
@@ -177,32 +183,7 @@ function renderHourlyCarousel(hours) {
 }
 
 
-// function renderWeekData(weatherData){
-  
-//   const weekContainer = document.querySelector('.week-cards-container');
-//   weekContainer.innerHTML = '';
-//   let html = '';
-//   for(let i = 1; i < 8; i++ ){
-//     html += 
-//     ` <div class="week-cards-container">
-//           <div class="week-card">
-//             <img class="week-card-icon" src="/icons/${weatherData.days[i].icon}.svg" />
-//             <div class="week-details-container">
-//               <div class="date">
-//                 <p class="day-name">${weatherData.days[i].getDayName()}</p>
-//                 <p class="date">${weatherData.days[i].formatDate()}</p>
-//               </div>
-//               <div class="temp-details">${weatherData.days[i].temp}°</div>
-//             </div>
-//           </div>`
-//         }
-//           weekContainer.innerHTML = html
 
-    // weekCards[i].querySelector('.day-name').textContent = 'TUE';
-    // weekCards[i].querySelector('.date').textContent = `${weatherData.days[i].date}`;
-    // weekCards[i].querySelector('.week-card-icon').src = `/icons/${weatherData.days[i].icon}.svg`;
-    // weekCards[i].querySelector('.temp-details').textContent = `${weatherData.days[i].temp}°`
-// }
 
 function renderWeekCarousel(weatherData) {
   const wrapper = document.getElementById("week-swiper-wrapper");
@@ -310,3 +291,42 @@ function hideLoading(){
   loading.style.display = 'none'
   mainContent.style.display = 'block'
 }
+
+function toggleColorsMode(){
+  const root = document.documentElement;
+
+  isDarkMode = !isDarkMode;
+
+  if(isDarkMode){
+    root.style.setProperty('--background-color', '#232323');
+    root.style.setProperty('--text-color', '#fafafa');
+    root.style.setProperty('--card-bg', '#313131');
+    root.style.setProperty('--muted-text', '#d2d2d2')
+    root.style.setProperty('--hover-color', '#9c27b0');
+    toggleColorsModeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" 
+         height="32px"
+         viewBox="0 -960 960 960"
+         width="32px"
+         fill="#757575">
+           <path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z"/>
+           </svg>`
+
+  } else {
+    root.style.setProperty('--background-color', '#ffffff');
+    root.style.setProperty('--text-color', '#202020ff');
+    root.style.setProperty('--card-bg', '#f5f5f5');
+    root.style.setProperty('--muted-text', '#666666');
+    root.style.setProperty('--hover-color', '#3498db');
+    toggleColorsModeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg"
+      height="32px"
+      viewBox="0 -960 960 960"
+      width="32px"
+      fill="#757575">
+      <path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"/>
+      </svg>`
+  }
+  }
+
+  toggleColorsModeBtn.addEventListener('click', () => {
+    toggleColorsMode()
+  })

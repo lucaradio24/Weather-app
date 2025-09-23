@@ -1,5 +1,10 @@
 :root {
-  --swiper-navigation-color: #fafafa;
+  --swiper-navigation-color: var(--text-color);
+  --background-color: #232323;
+  --text-color: #fafafa;
+  --card-bg: #313131;
+  --muted-text: #d2d2d2;
+  --hover-color: #4caf50;
 }
 
 p {
@@ -7,21 +12,22 @@ p {
 }
 
 .light-text {
-  color: #d2d2d2;
+  color: var(--muted-text);
 }
 
 .small-text {
-  font-size: 0.8rem;
+  font-size: 0.8em;
+  font-weight: 500;
 }
 
 body {
   padding: 0;
   box-sizing: border-box;
-  background-color: #232323;
+  background-color: var(--background-color);
   font-family: "Poppins", sans-serif;
   font-size: 18px;
   font-weight: 400;
-  color: #fafafa;
+  color: var(--text-color);
 }
 
 #app {
@@ -35,10 +41,26 @@ body {
   margin: 0 auto;
 }
 
+.search-wrapper{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#toggle-colors-mode{
+  background: transparent;
+  border: 0;
+}
+
+#toggle-colors-mode:hover svg{
+  fill: var(--hover-color);
+  cursor: pointer;
+}
+
 #search-box {
   width: 100%;
   position: relative;
-  margin-top: 15px;
 }
 
 #search-input {
@@ -46,13 +68,17 @@ body {
   border-radius: 30px;
   border: 0;
   padding: 15px 45px 15px 60px;
-  background-color: #313131;
+  background-color: var(--card-bg);
   font-size: 1rem;
-  color: #d2d2d2;
+  color: var(--muted-text);
   font-family: inherit;
 }
 
+#search-input:focus{
+  outline: none;
+  box-shadow: 0 0 0 2px var(--hover-color); /* Blu con trasparenza */
 
+}
 
 #search-btn {
   all: unset;
@@ -63,38 +89,43 @@ body {
 }
 
 #search-btn svg {
-  color: #fafafa;
+  color: var(--text-color);
 }
 
 #search-suggestions{
   position: absolute;
   top: 4rem;
-  background-color: #313131;
+  background-color: var(--card-bg);
   width: 100%;
-  padding: 1rem 0 1rem 0rem;
   z-index: 100;
   max-height: 250px;
   overflow-y: auto;
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.411);
+  padding-top: .5rem;
 }
 
 .suggestion{
   padding-left: 0.8rem;
   cursor: pointer;
   margin: 0.5rem 0;
-  background-color: #232323;
-  font-size: 1rem;
+  font-size: .9rem;
 }
 
+.suggestion:hover{
+  background-color: var(--hover-color);
+}
+
+.city-name{
+  margin: 0;
+}
 
 .top-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #232323;
+  background: var(--background-color);
   border-radius: 1.2rem;
-  color: #fff;
+  color: var(--text-color);
   width: 100%;
 
   gap: 2rem;
@@ -210,7 +241,7 @@ body {
   flex-direction: column;
   align-items: center;
   font-weight: 600;
-  background-color: #313131;
+  background-color: var(--card-bg);
   border-radius: 10px;
   padding: 10px;
 }
@@ -227,14 +258,19 @@ body {
 
 .week-card {
   border-radius: 10px;
-  background-color: #313131;
+  background-color: var(--card-bg);
   padding: 10px;
   display: flex;
   gap: 1rem;
 }
 
+.week-card:hover{
+  background-color: var(--hover-color);
+}
+
 .week-card-icon {
   height: 85px;
+  margin-left: .5rem;
 }
 
 .day-name {
@@ -264,6 +300,11 @@ body {
   width: 1rem !important;
 }
 
+.swiper-button-next:hover,
+.swiper-button-prev:hover{
+  color: var(--hover-color);
+}
+
 .swiper-button-next.swiper-button-disabled,
 .swiper-button-prev.swiper-button-disabled {
   display: none;
@@ -271,12 +312,6 @@ body {
 
 .week-card{
   cursor: pointer;
-}
-
-.swiper-slide.active {
-  border: 2px solid #fff; /* Esempio: bordo bianco */
-  background: rgba(255, 255, 255, 0.1); /* Sfondo semi-trasparente */
-  transform: scale(1.05); /* Leggera ingrandimento */
 }
 
 .spinner {
