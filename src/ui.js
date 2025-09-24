@@ -207,11 +207,16 @@ function renderWeekCarousel(weatherData, activeIndex) {
       `;
       if (i === activeIndex) {
         slide.querySelector(".week-card").classList.add("active");
-      }
+      } 
 
       slide.addEventListener("click", (e) => {
+        if(i === 0){
+          backToToday();
+          hideTodayBtn();
+        } else{
         renderData(weatherData, i);
         showTodayBtn();
+        }
       });
 
       wrapper.appendChild(slide);
