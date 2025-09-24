@@ -41,6 +41,10 @@ const uvIndex = document.querySelector("#uv-index");
 const pressure = document.querySelector("#pressure");
 const gusts = document.querySelector("#gusts");
 
+// Toggle details
+const weatherDetails = document.querySelector(".weather-details");
+const toggleDetailsBtn = document.querySelector("#toggle-details");
+
 // Week cards
 const weekCards = document.querySelectorAll(".week-card");
 
@@ -101,7 +105,6 @@ export async function initializeApp() {
     renderData(weatherData, 0);
     setTimeout(() => hideLoading(), 2000);
   }
-
 }
 
 export function renderData(weatherData, index) {
@@ -147,6 +150,7 @@ export function renderData(weatherData, index) {
   if (weekSwiperInstance) weekSwiperInstance.destroy();
   weekSwiperInstance = new Swiper(".week-swiper", {
     modules: [Navigation],
+    
     slidesPerView: 4,
     slidesPerGroup: 3, // Quante card visibili
     navigation: {
@@ -207,15 +211,15 @@ function renderWeekCarousel(weatherData, activeIndex) {
       `;
       if (i === activeIndex) {
         slide.querySelector(".week-card").classList.add("active");
-      } 
+      }
 
       slide.addEventListener("click", (e) => {
-        if(i === 0){
+        if (i === 0) {
           backToToday();
           hideTodayBtn();
-        } else{
-        renderData(weatherData, i);
-        showTodayBtn();
+        } else {
+          renderData(weatherData, i);
+          showTodayBtn();
         }
       });
 
@@ -284,7 +288,6 @@ function renderSuggestions(items) {
   document.addEventListener("click", (e) => {
     if (!container.contains(e.target)) container.style.display = "none";
   });
-
 }
 
 const debouncedSuggest = debounce(async (q) => {
@@ -301,12 +304,12 @@ const mainContent = document.getElementById("main-content");
 
 function showLoading() {
   loading.style.display = "block";
-  mainContent.style.display = 'none';
+  mainContent.style.display = "none";
 }
 
 function hideLoading() {
-  mainContent.style.display = 'block';
-  loading.style.display = 'none';
+  mainContent.style.display = "flex";
+  loading.style.display = "none";
 }
 
 // Theme helpers
@@ -354,10 +357,23 @@ toggleColorsModeBtn.addEventListener("click", () => {
   toggleColorsMode();
 });
 
+// Toggle details
+toggleDetailsBtn.addEventListener("click", () => {
+  if (
+    weatherDetails.style.display === "none" ||
+    weatherDetails.style.display === ""
+  ) {
+    weatherDetails.style.display = "grid";
+    toggleDetailsBtn.textContent = "Hide Details";
+  } else {
+    weatherDetails.style.display = "none";
+    toggleDetailsBtn.textContent = "Show Details";
+  }
+});
+
 // Back to today helper
 
 function backToToday() {
-
   if (currentWeatherData) {
     // Aggiorna la visualizzazione per il giorno 0 senza ricreare i swiper
     const index = 0;
@@ -392,7 +408,6 @@ function backToToday() {
       weekSwiperInstance.update();
       weekSwiperInstance.slideTo(0);
     }
-
   }
 }
 

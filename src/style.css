@@ -246,6 +246,10 @@ body {
   text-align: right;
 }
 
+#toggle-details{
+  display: none;
+}
+
 .weather-details {
   min-width: 100%;
   display: grid;
@@ -348,6 +352,7 @@ body {
   font-size: 0.8rem;
   cursor: pointer;
   display: none;
+  text-decoration: underline;
 }
 
 #today:hover {
@@ -357,10 +362,6 @@ body {
 .active {
   background-color: var(--hover-color);
 }
-
-
-
-
 
 .swiper-button-next,
 .swiper-button-prev {
@@ -423,19 +424,21 @@ body {
   transition: opacity 0.5s ease-in-out;
 }
 
-
-
 .hourly-card-icon,
 .icon,
 .week-card-icon {
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.562));
 }
 
-@media (max-width: 428px) {
+@media (max-width: 890px) {
   /* Layout generale */
   #app {
     max-width: 95vw; /* Più spazio su schermi piccoli */
     gap: 0.8rem; /* Riduci gap */
+  }
+
+  #main-content{
+    display: flex;
   }
 
   /* Search wrapper */
@@ -464,7 +467,6 @@ body {
   .weather-app {
     font-size: 1.2rem;
   }
-
 
   /* Input di ricerca */
   #search-input {
@@ -522,12 +524,30 @@ body {
   }
 
   /* Weather details */
+  #toggle-details {
+    display: block;
+    border-radius: 5px;
+    border: 0;
+    background-color: transparent;
+    color: var(--muted-text);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin: 1rem 0 0 70%; /* auto a sinistra per allineare a destra */
+    text-decoration: underline;
+  }
+
+  #toggle-details:hover {
+    background-color: var(--hover-color);
+  }
+
   .weather-details {
     grid-template-columns: repeat(2, 1fr); /* 2 colonne */
     gap: 1rem;
+    display: none;
   }
 
-/* Hourly cards */
+  /* Hourly cards */
 
   .hourly-card {
     font-size: 0.8rem;
@@ -535,23 +555,31 @@ body {
   }
 
   .swiper-button-next,
-  .swiper-button-prev{
+  .swiper-button-prev {
     display: none !important;
   }
 
   /* Week cards */
-  
-  .week-card{
+
+  #week-brief-title{
+    display: none;
+  }
+
+  .week-brief{
+    order: -1;
+  }
+
+  .week-card {
     flex-direction: column;
     gap: 0;
     align-items: center;
   }
 
-  .week-card-icon{
+  .week-card-icon {
     margin: 0;
   }
 
-  .temp-details{
+  .temp-details {
     display: none;
   }
 
@@ -559,6 +587,7 @@ body {
   #today {
     font-size: 0.7rem;
     padding: 0.2rem 0.4rem;
+    display: none !important;
   }
 
   /* Spinner */
