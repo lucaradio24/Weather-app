@@ -89,7 +89,7 @@ body {
   border: 0;
 }
 
-#toggle-colors-mode:hover svg {
+#toggle-colors-mode:hover :is(svg) {
   fill: var(--hover-color);
   cursor: pointer;
 }
@@ -125,7 +125,7 @@ body {
   top: 22%;
 }
 
-#search-btn svg {
+#search-btn :is(svg){
   color: var(--text-color);
 }
 
