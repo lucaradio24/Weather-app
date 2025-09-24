@@ -1,10 +1,12 @@
 :root {
   --swiper-navigation-color: var(--text-color);
-  --background-color: #232323;
-  --text-color: #fafafa;
-  --card-bg: #313131;
-  --muted-text: #d2d2d2;
-  --hover-color: #4caf50;
+  --background-color: #ffffff;
+  --text-color: #202020ff;
+  --card-bg: #B4CFF75E;
+  --muted-text: #666666;
+  --hover-color: #3498db86;
+  --logo-text: #2c3e50;
+  --dropdown-bg: rgba(225, 235, 250, 0.9);
 }
 
 p {
@@ -48,6 +50,44 @@ body {
   gap: 0.5rem;
 }
 
+.logo-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+.logo-wrapper p{
+  
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  line-height: 0.9;
+  text-align: center;
+}
+
+.yet-another{
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--logo-text);
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+}
+
+.weather-app{
+  font-size: 1.4rem; /* Più grande per prominenza */
+  font-weight: 700; /* Bold per impatto */
+  color: var(--logo-text);
+  letter-spacing: -0.01em; /* Leggermente compresso */
+  text-transform: capitalize;
+}
+
+#logo{
+  max-width: 200px;
+  max-height: 60px;
+  object-fit: contain;
+}
+
 #toggle-colors-mode{
   background: transparent;
   border: 0;
@@ -78,6 +118,7 @@ body {
 #search-input:focus{
   outline: none;
   box-shadow: 0 0 0 2px var(--hover-color); /* Blu con trasparenza */
+  transition: box-shadow 0.1s ease; /* Transizione per il focus */
 
 }
 
@@ -96,14 +137,16 @@ body {
 #search-suggestions{
   position: absolute;
   top: 4rem;
-  background-color: var(--card-bg);
+  background-color: var(--dropdown-bg);
   width: 100%;
   z-index: 100;
   max-height: 250px;
   overflow-y: auto;
   border-radius: 10px;
   padding-top: .5rem;
-  
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px); /* Per safari */
+
 
 }
 

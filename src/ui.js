@@ -28,7 +28,7 @@ const feelsLike = document.querySelector("#feelslike");
 const displayDate = document.querySelector("#display-date");
 const backToTodayBtn = document.querySelector("#today");
 
-let isDarkMode = true;
+let isDarkMode = false;
 const toggleColorsModeBtn = document.querySelector("#toggle-colors-mode");
 
 // Weather details cards
@@ -101,6 +101,7 @@ export async function initializeApp() {
     renderData(weatherData, 0);
     setTimeout(() => hideLoading(), 2000);
   }
+
 }
 
 export function renderData(weatherData, index) {
@@ -311,11 +312,13 @@ function toggleColorsMode() {
   isDarkMode = !isDarkMode;
 
   if (isDarkMode) {
-    root.style.setProperty("--background-color", "#232323");
+    root.style.setProperty("--background-color", "#1B1E20");
     root.style.setProperty("--text-color", "#fafafa");
-    root.style.setProperty("--card-bg", "#313131");
-    root.style.setProperty("--muted-text", "#d2d2d2");
-    root.style.setProperty("--hover-color", "#4caf50");
+    root.style.setProperty("--card-bg", "#212526");
+    root.style.setProperty("--muted-text", "#948D84");
+    root.style.setProperty("--hover-color", "#3498db6c");
+    root.style.setProperty("--logo-text", "#B0C5D6");
+    root.style.setProperty("--dropdown-bg", "rgba(36, 39, 40, 0.9)");
     toggleColorsModeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" 
          height="32px"
          viewBox="0 -960 960 960"
@@ -328,7 +331,10 @@ function toggleColorsMode() {
     root.style.setProperty("--text-color", "#202020ff");
     root.style.setProperty("--card-bg", "#B4CFF75E");
     root.style.setProperty("--muted-text", "#666666");
-    root.style.setProperty("--hover-color", "#3498db");
+    root.style.setProperty("--hover-color", "#3498db86");
+    root.style.setProperty("--logo-text", "#2c3e50");
+    root.style.setProperty("--dropdown-bg", "rgba(225, 235, 250, 0.9)");
+
     toggleColorsModeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg"
       height="32px"
       viewBox="0 -960 960 960"
