@@ -87,6 +87,8 @@ export async function getUserLocation() {
 export async function initializeApp() {
   showLoading();
   searchInput.value = "Finding your location...";
+  searchInput.disabled = true;
+
   try {
     const position = await getUserLocation();
     const cityName = await getCityNameFromCoords(position.lat, position.lon);
@@ -94,7 +96,10 @@ export async function initializeApp() {
     const weatherData = new WeatherData(apiData);
     searchInput.value = cityName || weatherData.city;
     renderData(weatherData, 0);
-    setTimeout(() => hideLoading(), 1000);
+    setTimeout(() => {hideLoading();
+      searchInput.disabled = false;
+     }, 1000);
+    
   } catch (error) {
     console.warn("Geolocalizzazione fallita", error.message);
     searchInput.value =
@@ -103,7 +108,9 @@ export async function initializeApp() {
     const weatherData = new WeatherData(apiData);
     searchInput.value = weatherData.city;
     renderData(weatherData, 0);
-    setTimeout(() => hideLoading(), 2000);
+    setTimeout(() => {hideLoading();
+      searchInput.disabled = false;
+    }, 2000);
   }
 }
 
@@ -122,7 +129,9 @@ export function renderData(weatherData, index) {
   uvIndex.textContent = weatherData.days[index].uvIndex;
   pressure.textContent = weatherData.days[index].pressure + " mB";
   gusts.textContent = weatherData.days[index].gusts + " km/h";
-  weatherIcon.src = `/icons/${weatherData.days[index].icon}.svg`;
+  weatherIcon.src = `${import.meta.env.BASE_URL}icons/${
+    weatherData.days[index].icon
+  }.svg`;
 
   description.textContent = weatherData.days[index].description.split(",")[0];
 
@@ -150,7 +159,7 @@ export function renderData(weatherData, index) {
   if (weekSwiperInstance) weekSwiperInstance.destroy();
   weekSwiperInstance = new Swiper(".week-swiper", {
     modules: [Navigation],
-    
+
     slidesPerView: 4,
     slidesPerGroup: 3, // Quante card visibili
     navigation: {
@@ -160,8 +169,13 @@ export function renderData(weatherData, index) {
     spaceBetween: 10,
   });
 
-  weekSwiperInstance.slideTo(Math.max(0, index - 1));
-  weekSwiperInstance.update();
+  // Ritarda il slideTo per evitare il flash sulla prima card
+  setTimeout(() => {
+    if (weekSwiperInstance) {
+      weekSwiperInstance.slideTo(Math.max(0, index - 1), 300);
+      weekSwiperInstance.update();
+    }
+  }, 50);
 }
 
 // Hourly cards
@@ -180,7 +194,10 @@ function renderHourlyCarousel(hours) {
     slide.innerHTML = `
       <div class="hourly-card">
         <span class="hour-text">${hour.formatHour()}</span>
-        <img class="hourly-card-icon" src="/icons/${hour.icon}.svg" />
+        <img class="hourly-card-icon" 
+             src="${import.meta.env.BASE_URL}icons/${hour.icon}.svg" 
+             onerror="this.src='${import.meta.env.BASE_URL}icons/clear-day.svg'"
+             loading="lazy" />
         <span class="hourly-card-temp">${hour.temp}°</span>
       </div>
     `;
@@ -196,10 +213,15 @@ function renderWeekCarousel(weatherData, activeIndex) {
       const slide = document.createElement("div");
       slide.className = "swiper-slide";
       slide.innerHTML = `
-        <div class="week-card">
-          <img class="week-card-icon" src="/icons/${
-            weatherData.days[i].icon
-          }.svg" />
+        <div class="week-card" data-index="${i}">
+          <img class="week-card-icon" 
+               src="${import.meta.env.BASE_URL}icons/${
+        weatherData.days[i].icon
+      }.svg" 
+               onerror="this.src='${
+                 import.meta.env.BASE_URL
+               }icons/clear-day.svg'"
+               loading="lazy" />
           <div class="week-details-container">
             <div class="date">
               <p class="day-name">${weatherData.days[i].getDayName()}</p>
@@ -209,11 +231,53 @@ function renderWeekCarousel(weatherData, activeIndex) {
           </div>
         </div>
       `;
+
+      const weekCard = slide.querySelector(".week-card");
       if (i === activeIndex) {
-        slide.querySelector(".week-card").classList.add("active");
+        weekCard.classList.add("active");
       }
 
-      slide.addEventListener("click", (e) => {
+      // Gestione eventi sia per desktop che mobile
+      let touchStartY = 0;
+      let touchStartX = 0;
+
+      const handleTouchStart = (e) => {
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+      };
+
+      const handleTouchEnd = (e) => {
+        const touchEndY = e.changedTouches[0].clientY;
+        const touchEndX = e.changedTouches[0].clientX;
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        const deltaX = Math.abs(touchEndX - touchStartX);
+
+        // Solo se non è stato uno scroll (delta piccolo)
+        if (deltaY < 10 && deltaX < 10) {
+          handleInteraction(e);
+        }
+      };
+
+      const handleInteraction = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Debounce per evitare click multipli rapidi
+        if (slide.dataset.processing) return;
+        slide.dataset.processing = "true";
+
+        // Rimuovi active da tutte le altre card
+        wrapper.querySelectorAll(".week-card").forEach((card) => {
+          card.classList.remove("active");
+        });
+
+        // Aggiungi active alla card cliccata
+        weekCard.classList.add("active");
+
+        setTimeout(() => {
+          delete slide.dataset.processing;
+        }, 500);
+
         if (i === 0) {
           backToToday();
           hideTodayBtn();
@@ -221,7 +285,12 @@ function renderWeekCarousel(weatherData, activeIndex) {
           renderData(weatherData, i);
           showTodayBtn();
         }
-      });
+      };
+
+      // Aggiungi listeners per entrambi gli eventi
+      slide.addEventListener("click", handleInteraction);
+      slide.addEventListener("touchstart", handleTouchStart, { passive: true });
+      slide.addEventListener("touchend", handleTouchEnd);
 
       wrapper.appendChild(slide);
     }
@@ -391,7 +460,9 @@ function backToToday() {
     uvIndex.textContent = currentWeatherData.days[index].uvIndex;
     pressure.textContent = currentWeatherData.days[index].pressure + " mB";
     gusts.textContent = currentWeatherData.days[index].gusts + " km/h";
-    weatherIcon.src = `/icons/${currentWeatherData.days[index].icon}.svg`;
+    weatherIcon.src = `${import.meta.env.BASE_URL}icons/${
+      currentWeatherData.days[index].icon
+    }.svg`;
     description.textContent =
       currentWeatherData.days[index].description.split(",")[0];
 
@@ -406,7 +477,9 @@ function backToToday() {
     if (hourlySwiperInstance) hourlySwiperInstance.update();
     if (weekSwiperInstance) {
       weekSwiperInstance.update();
-      weekSwiperInstance.slideTo(0);
+      setTimeout(() => {
+        weekSwiperInstance.slideTo(0, 300);
+      }, 50);
     }
   }
 }
