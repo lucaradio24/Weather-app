@@ -125,7 +125,7 @@ body {
   top: 22%;
 }
 
-#search-btn :is(svg){
+#search-btn :is(svg) {
   color: var(--text-color);
 }
 
@@ -246,7 +246,7 @@ body {
   text-align: right;
 }
 
-#toggle-details{
+#toggle-details {
   display: none;
 }
 
@@ -292,6 +292,9 @@ body {
 .hourly-card-icon {
   height: 60px;
   padding: 1rem;
+  min-width: 60px;
+  object-fit: contain;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .hourly-card-icon {
@@ -318,6 +321,10 @@ body {
 .week-card-icon {
   height: 85px;
   margin-left: 0.5rem;
+  min-width: 85px;
+  object-fit: contain;
+  background-color: transparent;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .day-name {
@@ -380,6 +387,14 @@ body {
 
 .week-card {
   cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.swiper-slide {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .spinner {
@@ -437,7 +452,7 @@ body {
     gap: 0.8rem; /* Riduci gap */
   }
 
-  #main-content{
+  #main-content {
     display: flex;
   }
 
@@ -561,11 +576,11 @@ body {
 
   /* Week cards */
 
-  #week-brief-title{
+  #week-brief-title {
     display: none;
   }
 
-  .week-brief{
+  .week-brief {
     order: -1;
   }
 

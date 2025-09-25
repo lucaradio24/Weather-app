@@ -1,34 +1,36 @@
 import "./style.css";
-import { searchFunction, renderData, initializeApp, getUserLocation } from "./ui.js";
+import {
+  searchFunction,
+  renderData,
+  initializeApp,
+  getUserLocation,
+} from "./ui.js";
 import { getApiData } from "./ApiData.js";
 import { WeatherData } from "./weatherData.js";
 import "swiper/css";
 import { getCityNameFromCoords } from "./weatherAPI.js";
 
+addEventListener("DOMContentLoaded", async () => {
+  searchFunction();
+  initializeApp();
 
+  // Codice di test performance spostato in funzione async
+  try {
+    console.time("Geolocalizzazione");
+    const position = await getUserLocation();
+    console.timeEnd("Geolocalizzazione");
 
+    console.time("Nome città");
+    const cityName = await getCityNameFromCoords(position.lat, position.lon);
+    console.timeEnd("Nome città");
 
-addEventListener('DOMContentLoaded', async () => {
-    searchFunction();
-    initializeApp();
-
-    // Codice di test performance spostato in funzione async
-    try {
-        console.time('Geolocalizzazione');
-        const position = await getUserLocation();
-        console.timeEnd('Geolocalizzazione');
-
-        console.time('Nome città');
-        const cityName = await getCityNameFromCoords(position.lat, position.lon);
-        console.timeEnd('Nome città');
-
-        console.time('Dati meteo');
-        const apiData = await getApiData(position);
-        console.timeEnd('Dati meteo');
-    } catch (error) {
-        console.error('Errore nel test performance:', error);
-    }
-})
+    console.time("Dati meteo");
+    const apiData = await getApiData(position);
+    console.timeEnd("Dati meteo");
+  } catch (error) {
+    console.error("Errore nel test performance:", error);
+  }
+});
 
 // const tempData = document.querySelector('.tempData')
 // const search = document.querySelector('input[type="search"]')
